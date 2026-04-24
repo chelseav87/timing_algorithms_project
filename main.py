@@ -57,10 +57,8 @@ def partition(array, low, high):
     swap(array, i + 1, high)
     return i + 1
 
-
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
-
 
 def quick_sort(array, low, high):
     if low < high:
