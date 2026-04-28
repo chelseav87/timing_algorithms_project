@@ -42,32 +42,37 @@ def test_algorithms(trials, repeats):
     setup = """
 from __main__ import selection_sort, quick_sort, unsorted_array
 import random, copy
-
 select_array = quick_array = builtin_array = copy.deepcopy(unsorted_array)
-
 n = len(unsorted_array)
-# print(f"Sorting: {unsorted_array}")
 """
 
     test_select = """
 selection_sort(select_array)
-# print(f"Sorted: {select_array}")
 """
     test_quick = """
 quick_sort(quick_array, 0, n - 1)
-# print(f"Sorted: {quick_array}")
 """
 
     select_times = timeit.repeat(stmt=test_select,setup=setup,repeat=repeats,number=trials)
+
+    # reference
+    for times in select_times:
+        print(f"{times:.20f}")
+
     print(f"\nSelection sort minimum time: {min(select_times) / trials:.20f}")
     print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.20f}")
     print(f"Selection sort maximum time: {max(select_times) / trials:.20f}")
 
     quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
+
+    # reference
+    for times in quick_times:
+        print(f"{times:.20f}")
+
     print(f"\nQuick sort minimum time: {min(quick_times) / trials:.20f}")
     print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.20f}")
     print(f"Quick sort maximum time: {max(quick_times) / trials:.20f}")
 
 TRIALS = 1
-REPEATS = 10
+REPEATS = 5
 test_algorithms(TRIALS, REPEATS)
