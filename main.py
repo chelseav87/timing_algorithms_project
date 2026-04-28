@@ -36,7 +36,7 @@ def swap(array, i, j):
 
 import random
 
-unsorted_array = [random.randint(0, 100) for x in range(1000)]
+unsorted_array = [random.randint(0, 100) for x in range(5000)]
 
 def test_algorithms(trials, repeats):
     setup = """
@@ -59,13 +59,15 @@ quick_sort(select_array, 0, n - 1)
 """
 
     select_times = timeit.repeat(stmt=test_select,setup=setup,repeat=repeats,number=trials)
-    select_min_time = min(select_times)
-    print(f"\nSelection sort minimum time: {select_min_time/trials:.20f}")
+    print(f"\nSelection sort minimum time: {min(select_times) / trials:.20f}")
+    print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.20f}")
+    print(f"Selection sort maximum time: {max(select_times) / trials:.20f}")
 
     quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
-    quick_min_time = min(quick_times)
-    print(f"Quick sort minimum time: {quick_min_time / trials:.20f}")
+    print(f"\nQuick sort minimum time: {min(quick_times) / trials:.20f}")
+    print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.20f}")
+    print(f"Quick sort maximum time: {max(quick_times) / trials:.20f}")
 
 TRIALS = 1
-REPEATS = 1
+REPEATS = 10
 test_algorithms(TRIALS, REPEATS)
