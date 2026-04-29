@@ -1,4 +1,4 @@
-import timeit
+import random, timeit
 
 def selection_sort(array):  # iterative implementation
     n = len(array)
@@ -34,8 +34,6 @@ def partition(array, low, high):    # lomuto partition algorithm
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
 
-import random
-
 unsorted_array = [random.randint(0, 100) for x in range(100)]
 
 def test_algorithms(trials, repeats):
@@ -55,24 +53,24 @@ quick_sort(quick_array, 0, n - 1)
 
     select_times = timeit.repeat(stmt=test_select,setup=setup,repeat=repeats,number=trials)
 
-    # reference
-    for times in select_times:
-        print(f"{times:.20f}")
-
     print(f"\nSelection sort minimum time: {min(select_times) / trials:.20f}")
     print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.20f}")
     print(f"Selection sort maximum time: {max(select_times) / trials:.20f}")
 
-    quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
-
     # reference
-    for times in quick_times:
+    for times in select_times:
         print(f"{times:.20f}")
+
+    quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
 
     print(f"\nQuick sort minimum time: {min(quick_times) / trials:.20f}")
     print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.20f}")
     print(f"Quick sort maximum time: {max(quick_times) / trials:.20f}")
 
+    # reference
+    for times in quick_times:
+        print(f"{times:.20f}")
+
 TRIALS = 1
-REPEATS = 5
+REPEATS = 10
 test_algorithms(TRIALS, REPEATS)
