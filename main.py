@@ -34,7 +34,7 @@ def partition(array, low, high):    # lomuto partition algorithm
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
 
-unsorted_array = [random.randint(0, 100) for x in range(100)]
+unsorted_array = [random.randint(0, 100) for x in range(1000)]
 
 def test_algorithms(trials, repeats):
     setup = """
@@ -78,5 +78,5 @@ quick_sort(quick_array, 0, n - 1)
             writer.writerow([trial, f"{time:.10f}"])
 
 TRIALS = 1
-REPEATS = 10
+REPEATS = 20
 test_algorithms(TRIALS, REPEATS)
