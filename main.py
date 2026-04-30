@@ -1,4 +1,4 @@
-import random, timeit
+import random, timeit, csv
 
 def selection_sort(array):  # iterative implementation
     n = len(array)
@@ -53,23 +53,29 @@ quick_sort(quick_array, 0, n - 1)
 
     select_times = timeit.repeat(stmt=test_select,setup=setup,repeat=repeats,number=trials)
 
-    print(f"\nSelection sort minimum time: {min(select_times) / trials:.20f}")
-    print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.20f}")
-    print(f"Selection sort maximum time: {max(select_times) / trials:.20f}")
+    print(f"\nSelection sort minimum time: {min(select_times) / trials:.10f}")
+    print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.10f}")
+    print(f"Selection sort maximum time: {max(select_times) / trials:.10f}")
 
-    # reference
-    for times in select_times:
-        print(f"{times:.20f}")
+    with open("selection_timings.csv", "w", newline="") as selection_timings_file:
+        writer = csv.writer(selection_timings_file)
+        writer.writerow(["Trial", "Time"])
+
+        for trial, time in enumerate(select_times):
+            writer.writerow([trial, f"{time:.10f}"])
 
     quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
 
-    print(f"\nQuick sort minimum time: {min(quick_times) / trials:.20f}")
-    print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.20f}")
-    print(f"Quick sort maximum time: {max(quick_times) / trials:.20f}")
+    print(f"\nQuick sort minimum time: {min(quick_times) / trials:.10f}")
+    print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.10f}")
+    print(f"Quick sort maximum time: {max(quick_times) / trials:.10f}")
 
-    # reference
-    for times in quick_times:
-        print(f"{times:.20f}")
+    with open("quick_timings.csv", "w", newline="") as quick_timings_file:
+        writer = csv.writer(quick_timings_file)
+        writer.writerow(["Trial", "Time"])
+
+        for trial, time in enumerate(quick_times):
+            writer.writerow([trial, f"{time:.10f}"])
 
 TRIALS = 1
 REPEATS = 10
