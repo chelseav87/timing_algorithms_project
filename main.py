@@ -1,4 +1,4 @@
-import numpy, timeit, csv
+import random, timeit, csv
 
 def selection_sort(array):  # iterative implementation
     n = len(array)
@@ -34,7 +34,7 @@ def partition(array, low, high):    # lomuto partition algorithm
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
 
-unsorted_array = numpy.random.rand(1,10)
+unsorted_array = [random.randint(0, 100) for x in range(3)]
 
 def test_algorithms(trials, repeats):
     setup = """
