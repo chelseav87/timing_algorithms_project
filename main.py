@@ -34,13 +34,13 @@ def partition(array, low, high):    # lomuto partition algorithm
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
 
-unsorted_array = [random.randint(0, 100) for x in range(10)]
+unsorted_array = [random.randint(0, 100) for x in range(1000)]
 
 def test_algorithms(trials, repeats):
     setup = """
 from __main__ import selection_sort, quick_sort, unsorted_array
 import random, copy
-select_array = quick_array = builtin_array = copy.deepcopy(unsorted_array)
+select_array = quick_array = copy.deepcopy(unsorted_array)
 n = len(unsorted_array)
 """
 
