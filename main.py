@@ -1,4 +1,4 @@
-import random, timeit, csv
+import numpy, timeit, csv
 
 def selection_sort(array):  # iterative implementation
     n = len(array)
@@ -34,7 +34,7 @@ def partition(array, low, high):    # lomuto partition algorithm
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
 
-unsorted_array = [random.randint(0, 100) for x in range(1000)]
+unsorted_array = numpy.random.rand(1,10)
 
 def test_algorithms(trials, repeats):
     setup = """
@@ -53,29 +53,22 @@ quick_sort(quick_array, 0, n - 1)
 
     select_times = timeit.repeat(stmt=test_select,setup=setup,repeat=repeats,number=trials)
 
-    print(f"\nSelection sort minimum time: {min(select_times) / trials:.10f}")
-    print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.10f}")
-    print(f"Selection sort maximum time: {max(select_times) / trials:.10f}")
-
-    with open("selection_timings.csv", "w", newline="") as selection_timings_file:
-        writer = csv.writer(selection_timings_file)
-        writer.writerow(["Trial", "Time"])
-
-        for trial, time in enumerate(select_times):
-            writer.writerow([trial, f"{time:.10f}"])
+    print(f"\nSelection sort minimum time: {min(select_times) / trials:.7f}")
+    print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.7f}")
+    print(f"Selection sort maximum time: {max(select_times) / trials:.7f}")
 
     quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
 
-    print(f"\nQuick sort minimum time: {min(quick_times) / trials:.10f}")
-    print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.10f}")
-    print(f"Quick sort maximum time: {max(quick_times) / trials:.10f}")
+    print(f"\nQuick sort minimum time: {min(quick_times) / trials:.7f}")
+    print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.7f}")
+    print(f"Quick sort maximum time: {max(quick_times) / trials:.7f}")
 
-    with open("quick_timings.csv", "w", newline="") as quick_timings_file:
-        writer = csv.writer(quick_timings_file)
-        writer.writerow(["Trial", "Time"])
+    with open("timings.csv", "w", newline="") as timings_file:
+        writer = csv.writer(timings_file)
+        writer.writerow(["Trial", "Selection Sort", "Quick Sort"])
 
-        for trial, time in enumerate(quick_times):
-            writer.writerow([trial, f"{time:.10f}"])
+        for trial, (select, quick) in enumerate(zip(select_times, quick_times)):
+            writer.writerow([trial+1, f"{select:.7f}", f"{quick:.7f}"])
 
 TRIALS = 1
 REPEATS = 20
