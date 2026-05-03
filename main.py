@@ -39,7 +39,7 @@ def test_algorithms(repeats, size):
     quick_times = []
 
     for x in range(repeats):
-        unsorted_array = random.sample(range(10000), size)
+        unsorted_array = random.sample(range(100000), size)
 
         select_array = unsorted_array.copy()
         start = time.perf_counter()
