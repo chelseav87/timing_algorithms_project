@@ -1,4 +1,4 @@
-import random, timeit, csv
+import time, random, copy, csv
 
 def selection_sort(array):  # iterative implementation
     n = len(array)
@@ -34,34 +34,32 @@ def partition(array, low, high):    # lomuto partition algorithm
 def swap(array, i, j):
     array[i], array[j] = array[j], array[i]
 
-unsorted_array = [random.randint(0, 100) for x in range(1000)]
+def test_algorithms(repeats, size):
+    select_times = []
+    quick_times = []
 
-def test_algorithms(trials, repeats):
-    setup = """
-from __main__ import selection_sort, quick_sort, unsorted_array
-import random, copy
-select_array = quick_array = copy.deepcopy(unsorted_array)
-n = len(unsorted_array)
-"""
+    for x in range(repeats):
+        unsorted_array = random.sample(range(10000), size)
 
-    test_select = """
-selection_sort(select_array)
-"""
-    test_quick = """
-quick_sort(quick_array, 0, n - 1)
-"""
+        select_array = unsorted_array.copy()
+        start = time.perf_counter()
+        selection_sort(select_array)
+        end = time.perf_counter()
+        select_times.append(end - start)
 
-    select_times = timeit.repeat(stmt=test_select,setup=setup,repeat=repeats,number=trials)
+        quick_array = unsorted_array.copy()
+        start = time.perf_counter()
+        quick_sort(quick_array, 0, len(quick_array) - 1)
+        end = time.perf_counter()
+        quick_times.append(end - start)
 
-    print(f"\nSelection sort minimum time: {min(select_times) / trials:.7f}")
-    print(f"Selection sort average time: {(sum(select_times) / len(select_times)) / trials:.7f}")
-    print(f"Selection sort maximum time: {max(select_times) / trials:.7f}")
+    print(f"\nSelection sort minimum time: {min(select_times):.7f}")
+    print(f"Selection sort average time: {sum(select_times) / len(select_times):.7f}")
+    print(f"Selection sort maximum time: {max(select_times):.7f}")
 
-    quick_times = timeit.repeat(stmt=test_quick, setup=setup, repeat=repeats, number=trials)
-
-    print(f"\nQuick sort minimum time: {min(quick_times) / trials:.7f}")
-    print(f"Quick sort average time: {(sum(quick_times) / len(quick_times)) / trials:.7f}")
-    print(f"Quick sort maximum time: {max(quick_times) / trials:.7f}")
+    print(f"\nQuick sort minimum time: {min(quick_times):.7f}")
+    print(f"Quick sort average time: {sum(quick_times) / len(quick_times):.7f}")
+    print(f"Quick sort maximum time: {max(quick_times):.7f}")
 
     with open("timings.csv", "w", newline="") as timings_file:
         writer = csv.writer(timings_file)
@@ -70,6 +68,6 @@ quick_sort(quick_array, 0, n - 1)
         for trial, (select, quick) in enumerate(zip(select_times, quick_times)):
             writer.writerow([trial+1, f"{select:.7f}", f"{quick:.7f}"])
 
-TRIALS = 1
 REPEATS = 20
-test_algorithms(TRIALS, REPEATS)
+SIZE = 1000
+test_algorithms(REPEATS, SIZE)
