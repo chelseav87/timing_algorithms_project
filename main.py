@@ -1,4 +1,4 @@
-import time, random, copy, csv
+import time, random, csv
 
 def selection_sort(array):  # iterative implementation
     n = len(array)
